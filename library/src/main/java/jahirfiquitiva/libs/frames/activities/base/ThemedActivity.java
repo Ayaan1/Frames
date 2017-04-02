@@ -39,6 +39,7 @@ public class ThemedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ThemeUtils.onActivityCreateSetTheme(this);
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
     @Override

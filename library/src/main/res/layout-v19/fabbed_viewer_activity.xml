@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:layout_marginEnd="@dimen/mini_fab_right_margin"
-                android:src="@drawable/heart_animated_selector"
+                app:srcCompat="@drawable/heart_animated_selector"
                 app:backgroundTint="@color/colorAccent"
                 app:fabSize="mini"
                 app:rippleColor="@color/semitransparent_white"/>

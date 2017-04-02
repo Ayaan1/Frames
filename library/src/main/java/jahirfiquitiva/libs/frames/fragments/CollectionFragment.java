@@ -153,8 +153,9 @@ public class CollectionFragment extends Fragment {
     }
 
     public void setupContent() {
-        mRecyclerView.setState(Utils.isConnected(getActivity()) ? EmptyViewRecyclerView
-                .STATE_NORMAL : EmptyViewRecyclerView.STATE_NOT_CONNECTED);
+        mRecyclerView.setState(Utils.isConnected(getActivity())
+                ? EmptyViewRecyclerView.STATE_NORMAL
+                : EmptyViewRecyclerView.STATE_NOT_CONNECTED);
 
         if (mRecyclerView.getState() != EmptyViewRecyclerView.STATE_NOT_CONNECTED) {
             mAdapter = null;
@@ -204,16 +205,18 @@ public class CollectionFragment extends Fragment {
         Preferences mPrefs = new Preferences(getActivity());
         if (lastColumns == mPrefs.getWallsColumnsNumber()) return;
         int columnsNumber = mPrefs.getWallsColumnsNumber();
+        boolean showAsCollection = isCollections ||
+                getResources().getBoolean(R.bool.wide_wallpapers_view);
         lastColumns = columnsNumber;
-        if ((isCollections) || (isSearch && collections != null)) columnsNumber /= 2;
+        if ((showAsCollection) || (isSearch && collections != null)) columnsNumber /= 2;
         if (getActivity().getResources().getConfiguration().orientation == 2) {
-            columnsNumber *= isCollections ? 2 : 1.5f;
+            columnsNumber *= showAsCollection ? 2 : 1.5f;
         }
         if (mRecyclerView == null) return;
         if (decoration != null)
             mRecyclerView.removeItemDecoration(decoration);
         decoration = new GridSpacingItemDecoration(columnsNumber,
-                ((isCollections) || (isSearch && collections != null)) ? 0 : getActivity()
+                ((showAsCollection) || (isSearch && collections != null)) ? 0 : getActivity()
                         .getResources().getDimensionPixelSize(R.dimen.cards_margin), true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), columnsNumber));
         mRecyclerView.addItemDecoration(decoration);

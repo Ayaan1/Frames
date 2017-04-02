@@ -168,31 +168,28 @@ public class CollectionActivity extends ThemedActivity {
 
     private void setupCollapsingToolbarPicture(Collection collection, ImageView toolbarHeader) {
 
-        final Bitmap[][] bitmap = {{null}};
+        final Bitmap[] bitmap = {null};
         final String filename = getIntent().getStringExtra("image");
         final Drawable[] d = new Drawable[1];
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-
                 if (filename != null) {
                     try {
                         FileInputStream is = openFileInput(filename);
-                        bitmap[0][0] = BitmapFactory.decodeStream(is);
+                        bitmap[0] = BitmapFactory.decodeStream(is);
                         is.close();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-
-
-                if (bitmap[0][0] != null) {
-                    d[0] = new GlideBitmapDrawable(getResources(), bitmap[0][0]);
+                if (bitmap[0] != null) {
+                    d[0] = new GlideBitmapDrawable(getResources(), bitmap[0]);
                 } else {
-                    d[0] = new ColorDrawable(ContextCompat.getColor(CollectionActivity.this, android.R.color.transparent));
+                    d[0] = new ColorDrawable(ContextCompat.getColor(CollectionActivity.this,
+                            android.R.color.transparent));
                 }
-
             }
         }).start();
 

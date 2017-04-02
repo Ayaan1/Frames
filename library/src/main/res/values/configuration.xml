@@ -43,6 +43,11 @@
         otherwise, set to false -->
     <bool name="fabbed_viewer">false</bool>
 
+    <!-- Wide wallpapers view
+    Set to true if you want wallpapers to look like categories.
+    -->
+    <bool name="wide_wallpapers_view">false</bool>
+
     <!-- === DONATIONS CONFIGURATION === -->
 
     <!-- MAKE SURE THAT THE TWO ARRAYS BELOW ALL HAVE THE SAME NUMBER OF ITEMS,

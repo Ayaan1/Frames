@@ -16,7 +16,6 @@
   -->
 
 <resources>
-
     <!-- Set the name of your app -->
     <string name="app_name">Frames</string>
 
@@ -42,6 +41,11 @@
     <!-- Set to true if you want to have a wallpaper viewer with a FAB (FloatingActionButton),
         otherwise, set to false -->
     <bool name="fabbed_viewer">false</bool>
+
+    <!-- Wide wallpapers view
+    Set to true if you want wallpapers to look like categories.
+    -->
+    <bool name="wide_wallpapers_view">false</bool>
 
     <!-- === DONATIONS CONFIGURATION === -->
 

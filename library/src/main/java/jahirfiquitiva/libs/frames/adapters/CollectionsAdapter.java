@@ -21,13 +21,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -101,19 +98,17 @@ public class CollectionsAdapter extends RecyclerView.Adapter<WallpaperHolder> {
     }
 
     @SuppressWarnings({"ResultOfMethodCallIgnored", "unchecked"})
-    private void doOnPressed(Object item, final Bitmap bitmap, final ImageView wall, final TextView name) {
+    private void doOnPressed(Object item, final Bitmap bitmap, final ImageView wall,
+                             final TextView name) {
 
         final Intent collectionDetails = new Intent(activity, CollectionActivity.class);
         collectionDetails.putExtra("collection", (Collection) item);
         collectionDetails.putExtra("wallTransition", ViewCompat.getTransitionName(wall));
         collectionDetails.putExtra("nameTransition", ViewCompat.getTransitionName(name));
-
         new Thread(new Runnable() {
             @Override
             public void run() {
-
                 try {
-
                     if (bitmap != null) {
                         String filename = "thumb.png";
                         FileOutputStream stream = activity.openFileOutput(filename, Context
@@ -128,12 +123,9 @@ public class CollectionsAdapter extends RecyclerView.Adapter<WallpaperHolder> {
                     e.printStackTrace();
                     ActivityCompat.startActivityForResult(activity, collectionDetails, 11, null);
                 }
-
             }
         }).start();
-
         ActivityCompat.startActivityForResult(activity, collectionDetails, 11, null);
-
     }
 
 }
