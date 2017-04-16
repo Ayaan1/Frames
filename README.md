@@ -18,7 +18,7 @@
 <h4 align="center"><b>Support my work and get rewards! ;)</b></h4>
 </p>
 <p align="center">
-	<a align="center" href="https://www.patreon.com/bePatron?u=5261073" data-patreon-widget-type="become-patron-button"><img align="center" height="40" width="204" src="https://s3-us-west-1.amazonaws.com/widget-images/become-patron-widget-medium%402x.png" alt="Support on Patreon"></a><script async src="https://cdn6.patreon.com/becomePatronButton.bundle.js"></script>
+	<a align="center" href="https://www.patreon.com/bePatron?u=5261073" data-patreon-widget-type="become-patron-button"><img align="center" height="40" width="204" src="https://s3-us-west-1.amazonaws.com/widget-images/become-patron-widget-medium%402x.png" alt="Support on Patreon"></a>
 </p>
 <br>
 

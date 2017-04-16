@@ -20,7 +20,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 ext {
     TARGET_SDK = 25
     BUILD_TOOLS = "25.0.2"
-    ANDROID_SUPPORT_LIBS = "25.3.0"
+    ANDROID_SUPPORT_LIBS = "25.3.1"
 }
 
 android {
@@ -35,8 +35,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion TARGET_SDK
-        versionCode 142
-        versionName "1.4.2"
+        versionCode 150
+        versionName "1.5.0"
         vectorDrawables.useSupportLibrary = true
         consumerProguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
@@ -62,10 +62,8 @@ android {
     }
 }
 
-apply from: 'fat-aar.gradle'
-
 dependencies {
-    embedded fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     //Support Libraries
     compile "com.android.support:appcompat-v7:$ANDROID_SUPPORT_LIBS"
     compile "com.android.support:support-v4:$ANDROID_SUPPORT_LIBS"
@@ -74,7 +72,7 @@ dependencies {
     compile "com.android.support:cardview-v7:$ANDROID_SUPPORT_LIBS"
     compile "com.android.support:palette-v7:$ANDROID_SUPPORT_LIBS"
     //Material Dialogs
-    compile 'com.afollestad.material-dialogs:core:0.9.4.2'
+    compile 'com.afollestad.material-dialogs:core:0.9.4.3'
     //OkHttp
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     //Glide Library - Image Loading Lib
@@ -86,7 +84,7 @@ dependencies {
     //Muzei API
     compile 'com.google.android.apps.muzei:muzei-api:2.0'
     //License Checker Lib
-    compile 'com.github.javiersantos:PiracyChecker:0.0.3'
+    compile 'com.github.javiersantos:PiracyChecker:1.1'
     // Database
     compile 'com.afollestad:inquiry:5.0.0'
     // Donations Lib

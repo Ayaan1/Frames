@@ -19,7 +19,6 @@ package jahirfiquitiva.libs.frames.utils;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -31,22 +30,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
-
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.github.javiersantos.piracychecker.enums.PiracyCheckerError;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import jahirfiquitiva.libs.frames.R;
-import jahirfiquitiva.libs.frames.dialogs.FramesDialogs;
-import jahirfiquitiva.libs.repellomaxima.mess.RepelloCallback;
-import jahirfiquitiva.libs.repellomaxima.mess.RepelloMaxima;
 
 public class Utils {
 
@@ -179,19 +170,7 @@ public class Utils {
         win.setAttributes(winParams);
     }
 
-    public static void runLicenseChecker(Context context, boolean ch, String lic, boolean allAma,
-                                         SuccessCallback callback) {
-        Preferences mPrefs = new Preferences(context);
-        if (ch) {
-            if (isNewVersion(context) || (!(mPrefs.isDashboardWorking())))
-                checkLicense(context, lic, allAma, callback);
-        } else {
-            mPrefs.setDashboardWorking(true);
-            if (callback != null) callback.onSuccess();
-        }
-    }
-
-    private static boolean isNewVersion(Context context) {
+    public static boolean isNewVersion(Context context) {
         Preferences mPrefs = new Preferences(context);
         int prevVersionCode = mPrefs.getVersionCode();
         int curVersionCode = getAppVersionCode(context);
@@ -200,117 +179,6 @@ public class Utils {
             return true;
         }
         return false;
-    }
-
-    private static void checkLicense(final Context context, String lic, boolean allAma,
-                                     final SuccessCallback callback) {
-        final Preferences mPrefs = new Preferences(context);
-        final RepelloMaxima[] spell = new RepelloMaxima[1];
-        final RepelloMaxima.Speller speller = new RepelloMaxima.Speller(context)
-                .allAmazon(allAma)
-                .thenDo(new RepelloCallback() {
-                    @Override
-                    public void onRepelled() {
-                        FramesDialogs.showLicenseSuccessDialog(context, new MaterialDialog
-                                .SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog materialDialog, @NonNull
-                                    DialogAction dialogAction) {
-                                mPrefs.setDashboardWorking(true);
-                                if (callback != null) callback.onSuccess();
-                            }
-                        }, new MaterialDialog.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialog) {
-                                mPrefs.setDashboardWorking(true);
-                                if (callback != null) callback.onSuccess();
-                            }
-                        }, new MaterialDialog.OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface dialog) {
-                                mPrefs.setDashboardWorking(true);
-                                if (callback != null) callback.onSuccess();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onLucky() {
-                        try {
-                            showNotLicensedDialog(((Activity) context), mPrefs);
-                        } catch (Exception e) {
-                            ((Activity) context).finish();
-                        }
-                    }
-
-                    @Override
-                    public void onCastError(PiracyCheckerError error) {
-                        FramesDialogs.showLicenseErrorDialog(context, new MaterialDialog
-                                .SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull
-                                    DialogAction which) {
-                                if (spell[0] != null) spell[0].cast();
-                            }
-                        }, new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull
-                                    DialogAction which) {
-                                ((Activity) context).finish();
-                            }
-                        }, new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialogInterface) {
-                                ((Activity) context).finish();
-                            }
-                        }, new MaterialDialog.OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface dialogInterface) {
-                                ((Activity) context).finish();
-                            }
-                        });
-                    }
-                });
-        if (lic != null)
-            speller.withLicKey(lic);
-        spell[0] = speller.construct();
-        spell[0].cast();
-    }
-
-    private static void showNotLicensedDialog(final Activity act, Preferences mPrefs) {
-        mPrefs.setDashboardWorking(false);
-        FramesDialogs.showShallNotPassDialog(act, new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction
-                    dialogAction) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=" + act
-                                .getPackageName()));
-                act.startActivity(browserIntent);
-            }
-        }, new MaterialDialog.SingleButtonCallback() {
-
-            @Override
-            public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction
-                    dialogAction) {
-                act.finish();
-            }
-        }, new MaterialDialog.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                act.finish();
-            }
-        }, new MaterialDialog.OnCancelListener() {
-
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                act.finish();
-            }
-        });
-    }
-
-    public interface SuccessCallback {
-        void onSuccess();
     }
 
 }

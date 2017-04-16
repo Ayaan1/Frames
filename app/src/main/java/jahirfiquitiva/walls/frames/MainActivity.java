@@ -41,4 +41,16 @@ public class MainActivity extends LaunchActivity {
         // TODO: Replace with true or false
         return !BuildConfig.DEBUG;
     }
+
+    @Override
+    protected boolean checkLPF() {
+        // Whether to check or not for LuckyPatcher, Freedom and others
+        return true;
+    }
+
+    @Override
+    protected boolean checkStores() {
+        // Whether to check or not for stores like Aptoide, BlackMart and others
+        return true;
+    }
 }

@@ -30,8 +30,8 @@ public class LaunchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String shortcut = "";
-        if (getIntent().getDataString() != null && getIntent().getDataString().contains
-                ("_shortcut")) {
+        if (getIntent().getDataString() != null &&
+                getIntent().getDataString().contains("_shortcut")) {
             shortcut = getIntent().getDataString();
         }
         Intent studio;
@@ -45,6 +45,8 @@ public class LaunchActivity extends AppCompatActivity {
         studio.putExtra("key", getKey());
         studio.putExtra("check", check());
         studio.putExtra("allAma", allAma());
+        studio.putExtra("checkLPF", checkLPF());
+        studio.putExtra("checkStores", checkStores());
         startActivity(studio);
         finish();
     }
@@ -58,6 +60,14 @@ public class LaunchActivity extends AppCompatActivity {
     }
 
     protected boolean check() {
+        return true;
+    }
+
+    protected boolean checkLPF() {
+        return true;
+    }
+
+    protected boolean checkStores() {
         return true;
     }
 
