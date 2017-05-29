@@ -58,7 +58,7 @@ public class DownloadJSONTask extends AsyncTaskLoader<ArrayList<Collection>> {
         if (json != null) {
             try {
                 JSONArray jsonCollections = json.getJSONArray("Collections");
-                collections.add(new Collection("Featured", null, null));
+                boolean shouldAddFeatured = false;
                 for (int i = 0; i < jsonCollections.length(); i++) {
                     JSONObject nCollection = jsonCollections.getJSONObject(i);
                     String name = nCollection.getString("name");
@@ -76,30 +76,36 @@ public class DownloadJSONTask extends AsyncTaskLoader<ArrayList<Collection>> {
                         try {
                             copyright = nWallpaper.getString("copyright");
                         } catch (Exception ignored) {
-                            //
                         }
                         String dimensions = "";
                         try {
                             dimensions = nWallpaper.getString("dimensions");
                         } catch (Exception ignored) {
-                            //
                         }
                         String thumbnail = null;
                         try {
                             thumbnail = nWallpaper.getString("thumbnail");
                         } catch (Exception ignored) {
-                            //
                         }
                         boolean downloadable = true;
                         try {
                             downloadable = nWallpaper.getString("downloadable").equals("true");
                         } catch (Exception ignored) {
-                            //
                         }
                         wallpapers.add(new Wallpaper(nWallpaper.getString("name"), nWallpaper
                                 .getString("author"), copyright, dimensions, nWallpaper.getString
                                 ("url"), thumbnail, nWallpaper.getString("collections"),
                                 downloadable));
+                        if(!shouldAddFeatured)
+                            shouldAddFeatured = nWallpaper.getString("collections")
+                                                .toLowerCase().contains("featured");
+                    }
+                    
+                    if(shouldAddFeatured){
+                        try {
+                            collections.add(0, new Collection("Featured", null, null));
+                        } catch (Exception ignored){
+                        }
                     }
 
                     for (Wallpaper wallpaper : wallpapers) {
